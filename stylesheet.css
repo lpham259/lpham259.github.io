@@ -1,0 +1,56 @@
+/* CSS selector to style one HTML tag */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    margin: 0;
+    padding: 0;
+}
+
+/* Class to style multiple elements */
+.description {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* ID selector to style an element */
+#main-title {
+    text-align: center;
+    font-size: 36px;
+    margin-top: 20px;
+}
+
+/* Div styling for layout */
+.content-section {
+    padding: 20px;
+    margin: 20px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+}
+
+/* Styling the <a> link and adding hover effect */
+a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #ff4500;
+    text-decoration: underline;
+}
+
+/* Changing box model properties (padding and margin) */
+img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+    margin: 20px 0;
+}
+
+/* Another box model property change (padding for divs) */
+.content-section {
+    padding: 20px;
+    margin: 10px auto;
+    max-width: 800px;
+}
