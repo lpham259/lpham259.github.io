@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Lucas - Date Night Menu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            line-height: 1.4;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .left-panel {
+            padding: 40px 60px 140px 40px;
+            background: white;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        .right-panel {
+            background-color: #f0f0f0;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .dish-image {
+            width: 100%;
+            height: 33.33vh;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .dish-image:first-child {
+            object-position: center top;
+        }
+        
+        .dish-image:nth-child(2) {
+            object-position: center center;
+        }
+        
+        .dish-image:last-child {
+            object-position: center bottom;
+        }
+        
+        .hamburger {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            display: block;
+            height: 2px;
+            background: #666;
+            margin: 4px 0;
+            transition: 0.3s;
+        }
+        
+        .restaurant-name {
+            font-size: 36px;
+            font-weight: 300;
+            color: #999;
+            margin: 80px 0 8px 0;
+            letter-spacing: 1px;
+        }
+        
+        .reservation-link {
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            margin-bottom: 60px;
+            display: inline-block;
+        }
+        
+        .section-nav {
+            margin: 40px 0;
+        }
+        
+        .section-nav a {
+            display: inline-block;
+            margin-right: 40px;
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            padding: 8px 0;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .section-nav a:hover,
+        .section-nav a.active {
+            color: #333;
+            border-bottom-color: #333;
+        }
+        
+        .menu-tabs {
+            margin: 20px 0 40px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .tab-button {
+            background: none;
+            border: none;
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 12px 30px 12px 0;
+            margin-right: 20px;
+            cursor: pointer;
+            border-bottom: 1px solid transparent;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+        
+        .tab-button:hover,
+        .tab-button.active {
+            color: #333;
+            border-bottom-color: #333;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .menu-description {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        
+        .menu-item {
+            margin-bottom: 35px;
+        }
+        
+        .item-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        
+        .item-description {
+            color: #333;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 6px;
+        }
+        
+        .item-details {
+            font-style: italic;
+            color: #999;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        
+        .download-section {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            right: 60px;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 15px;
+            background: white;
+            z-index: 10;
+        }
+        
+        .download-link {
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .download-link::after {
+            content: '●';
+            margin-left: 8px;
+            font-size: 8px;
+        }
+        
+        .location-info {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            right: 40px;
+            font-size: 10px;
+            color: white;
+            letter-spacing: 0.5px;
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .right-panel {
+                height: 300px;
+                order: -1;
+            }
+            
+            .left-panel {
+                padding: 30px;
+            }
+            
+            .download-section {
+                position: static;
+                margin-top: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <h1 class="restaurant-name">Le Lucas</h1>
+            <a href="#" class="reservation-link">Reservations</a>
+            
+            <nav class="section-nav">
+                <a href="#" class="active">Dining Room</a>
+            </nav>
+            
+            <div class="menu-tabs">
+                <button class="tab-button active" onclick="showTab('chefs-tasting')">Chef's Tasting</button>
+                <button class="tab-button" onclick="showTab('dinner')">Dinner</button>
+                <button class="tab-button" onclick="showTab('dessert')">Dessert</button>
+            </div>
+            
+            <div id="chefs-tasting" class="tab-content active">
+                <p class="menu-description">Chef's Tasting Menu - Tonight's complete experience crafted with love</p>
+                
+                <div class="menu-item">
+                    <h3 class="item-name">Geotjeori</h3>
+                    <p class="item-description">Fresh Kimchi, Napa Cabbage, Gochugaru, Scallions</p>
+                    <p class="item-details">Made today, crisp and vibrant to awaken the palate</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3 class="item-name">Pork Belly</h3>
+                    <p class="item-description">Crispy Skin, Crack Sauce, Five-Spice, Jasmine Rice</p>
+                    <p class="item-details">Slow-roasted then crisped, glazed with our signature sauce</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3 class="item-name">Mango Pancakes</h3>
+                    <p class="item-description">Hong Kong Style, Fresh Mango, Whipped Cream</p>
+                    <p class="item-details">Delicate crepes folded with tropical fruit and cream</p>
+                </div>
+            </div>
+            
+            <div id="dinner" class="tab-content">
+                <p class="menu-description">Geotjeori & Crispy Pork Belly - A harmonious Korean flavor journey</p>
+                
+                <div class="menu-item">
+                    <h3 class="item-name">Geotjeori</h3>
+                    <p class="item-description">Fresh Kimchi, Crisp Napa Cabbage, Korean Chili Flakes, Fish Sauce</p>
+                    <p class="item-details">No fermentation, just pure Korean flavors, bright and clean</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3 class="item-name">Preparation</h3>
+                    <p class="item-description">Cabbage Salted, Drained, Tossed with Gochugaru and Aromatics</p>
+                    <p class="item-details">Made fresh today for optimal crunch and vibrancy</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3 class="item-name">Pork Belly</h3>
+                    <p class="item-description">Scored Skin, Five-Spice Rub, Slow-Roasted, High-Heat Finish</p>
+                    <p class="item-details">Perfect crackling with tender, rendered fat beneath</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3 class="item-name">Crack Sauce</h3>
+                    <p class="item-description">Soy, Brown Sugar, Rice Wine, Ginger, Garlic</p>
+                    <p class="item-details">Sweet, savory, utterly addictive - hence the name</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3 class="item-name">Harmony</h3>
+                    <p class="item-description">Kimchi's Acidity Cuts Through Rich Pork, Perfect Balance</p>
+                    <p class="item-details">Crisp vegetables with tender meat, fire and comfort</p>
+                </div>
+            </div>
+            
+            <div id="dessert" class="tab-content">
+                <p class="menu-description">Hong Kong Mango Pancakes - Delicate Asian elegance to close</p>
+                
+                <div class="menu-item">
+                    <h3 class="item-name">Crepes</h3>
+                    <p class="item-description">Paper-Thin Pancakes, Eggs, Flour, Milk, Golden Perfection</p>
+                    <p class="item-details">Light texture that melts on the tongue</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3 class="item-name">Mango</h3>
+                    <p class="item-description">Fresh, Ripe, Selected for Perfect Sweetness, Silky Texture</p>
+                    <p class="item-details">Diced into perfect cubes for ideal proportion</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3 class="item-name">Cream</h3>
+                    <p class="item-description">Fresh Whipped, Lightly Sweetened, Soft Peaks</p>
+                    <p class="item-details">Perfect contrast to the tropical fruit</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3 class="item-name">Assembly</h3>
+                    <p class="item-description">Each Pancake Filled, Folded into Elegant Parcels, Chilled</p>
+                    <p class="item-details">Served immediately for optimal texture</p>
+                </div>
+                
+                <div class="menu-item">
+                    <h3 class="item-name">Balance</h3>
+                    <p class="item-description">Refreshing, Not-Too-Sweet, Cleanses After Rich Pork</p>
+                    <p class="item-details">The perfect finale to our evening together</p>
+                </div>
+            </div>
+            
+            <div class="download-section">
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #f0f0f0;">
+                    <p style="font-size: 10px; color: #ccc; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Chef's References</p>
+                    <a href="https://twoplaidaprons.com/fresh-kimchi-geotjeori/" target="_blank" style="display: block; font-size: 9px; color: #999; margin-bottom: 3px; text-decoration: none;">Geotjeori Recipe</a>
+                    <a href="https://thespicyjuju.com/crispy-air-fryer-pork-belly/" target="_blank" style="display: block; font-size: 9px; color: #999; margin-bottom: 3px; text-decoration: none;">Pork Belly Recipe</a>
+                    <a href="https://zhangcatherine.com/mango-pancake/" target="_blank" style="display: block; font-size: 9px; color: #999; text-decoration: none;">Mango Pancake Recipe</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="right-panel">
+            <img src="mango-pancakes.jpg" alt="Fresh Mango Pancakes" class="dish-image">
+            <img src="fresh-kimchi.jpg" alt="Fresh Kimchi" class="dish-image">
+            <img src="crispy-pork-belly.jpg" alt="Crispy Pork Belly" class="dish-image">
+            <div class="location-info">
+                Your Kitchen, Tonight, Just For Two
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
